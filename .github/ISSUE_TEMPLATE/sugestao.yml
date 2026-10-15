@@ -1,0 +1,11 @@
+name: Sugestão
+description: Nova seção, novo idioma, ajuste visual, etc.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Proposta
+      description: O que você gostaria e por quê.
+    validations:
+      required: true

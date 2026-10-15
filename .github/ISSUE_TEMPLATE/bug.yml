@@ -1,0 +1,27 @@
+name: Problema
+description: Algo não compila ou não sai como esperado
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Nunca cole dados pessoais reais aqui.** Reproduza o problema com um trecho
+        fictício (por exemplo, editando `exemplos/dados.yaml`).
+  - type: textarea
+    id: descricao
+    attributes:
+      label: O que aconteceu?
+      description: Inclua a mensagem de erro completa do Typst, se houver.
+    validations:
+      required: true
+  - type: textarea
+    id: reproducao
+    attributes:
+      label: Como reproduzir
+      description: Comando usado e trecho mínimo (fictício) do YAML.
+      render: yaml
+  - type: input
+    id: versao
+    attributes:
+      label: Versão do Typst
+      placeholder: "typst --version"

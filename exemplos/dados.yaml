@@ -1,0 +1,242 @@
+# yaml-language-server: $schema=../schema/curriculo.schema.json
+#
+# Dados de EXEMPLO de uma pessoa fictícia. Nenhuma informação aqui é real.
+# Este arquivo preenche todos os campos do esquema (inclusive os opcionais)
+# para servir de documentação viva e de teste visual do template.
+#
+# Regras rápidas:
+#   - item de lista SEM `tags` aparece em todos os perfis;
+#   - item COM `tags` aparece nos perfis que compartilham ao menos uma tag;
+#   - campos com sufixo `_en` são usados quando idioma=en (fallback: campo sem sufixo);
+#   - datas no formato "AAAA-MM" (entre aspas); `fim` aceita também `atual`.
+
+pessoal:
+  nome: Ana Exemplo
+  titulo_padrao: Profissional de Dados
+  titulo_padrao_en: Data Professional
+  email: ana@exemplo.com
+  telefone: "+55 11 90000-0000"
+  cidade: São Paulo/SP
+  cidade_en: São Paulo, Brazil
+  linkedin: linkedin.com/in/ana-exemplo
+  github: github.com/ana-exemplo
+  site: ana-exemplo.dev
+  foto: exemplos/foto-exemplo.png
+
+resumos:
+  padrao: >-
+    Profissional de dados com experiência de ponta a ponta: da coleta e modelagem
+    à entrega de modelos e painéis usados no dia a dia de times de negócio.
+  padrao_en: >-
+    Data professional with end-to-end experience, from collection and modeling to
+    shipping models and dashboards used daily by business teams.
+  cientista-dados: >-
+    Cientista de dados focada em modelos preditivos e experimentação. Gosto de
+    transformar perguntas vagas em hipóteses testáveis e de medir o impacto real
+    do que vai para produção.
+  cientista-dados_en: >-
+    Data scientist focused on predictive models and experimentation. I enjoy turning
+    vague questions into testable hypotheses and measuring the real impact of what
+    reaches production.
+  data-engineer: >-
+    Engenheira de dados com foco em pipelines confiáveis, observáveis e baratos de
+    operar, em nuvem e com infraestrutura como código.
+  data-engineer_en: >-
+    Data engineer focused on reliable, observable and cost-efficient pipelines, in
+    the cloud and with infrastructure as code.
+  analista-dados: >-
+    Analista de dados que traduz métricas em decisões: definição de indicadores,
+    painéis self-service e análises ad hoc para diretoria e produto.
+  analista-dados_en: >-
+    Data analyst who turns metrics into decisions: KPI definition, self-service
+    dashboards and ad hoc analyses for leadership and product.
+
+experiencias:
+  - cargo: Cientista de Dados Pleno
+    cargo_en: Data Scientist
+    empresa: Mercado Aurora Ltda.
+    local: Remoto
+    local_en: Remote
+    inicio: "2024-06"
+    fim: atual
+    itens:
+      - texto: Desenvolvi modelo de previsão de demanda que reduziu a ruptura de estoque em 18%
+        texto_en: Built a demand forecasting model that cut stockouts by 18%
+        tags: [ml, estatistica]
+      - texto: Desenhei e analisei testes A/B de recomendação com mais de 2 milhões de usuários
+        texto_en: Designed and analyzed recommendation A/B tests with over 2 million users
+        tags: [estatistica, analytics]
+      - texto: Migrei rotinas de features de notebooks para jobs agendados em Airflow e dbt
+        texto_en: Moved feature routines from notebooks to scheduled Airflow and dbt jobs
+        tags: [engenharia]
+      - texto: Publiquei o modelo como API em contêiner na nuvem, com monitoramento de drift
+        texto_en: Shipped the model as a containerized cloud API with drift monitoring
+        tags: [cloud, engenharia]
+
+  - cargo: Analista de Dados
+    cargo_en: Data Analyst
+    empresa: Fintech Horizonte S.A.
+    local: São Paulo/SP (híbrido)
+    local_en: São Paulo, Brazil (hybrid)
+    inicio: "2022-08"
+    fim: "2024-05"
+    itens:
+      - texto: Criei painéis de inadimplência e originação adotados por 5 áreas de negócio
+        texto_en: Created delinquency and origination dashboards adopted by 5 business units
+        tags: [analytics, bi]
+      - texto: Padronizei a camada semântica de métricas, eliminando divergências entre relatórios
+        texto_en: Standardized the metrics semantic layer, removing discrepancies across reports
+        tags: [bi, engenharia]
+      - texto: Construí score de propensão a cancelamento usado em campanhas de retenção
+        texto_en: Built a churn propensity score used in retention campaigns
+        tags: [ml]
+
+  - cargo: Estagiária de Engenharia de Dados
+    cargo_en: Data Engineering Intern
+    empresa: Instituto Exemplo de Pesquisa
+    local: Campinas/SP
+    local_en: Campinas, Brazil
+    inicio: "2021-09"
+    fim: "2022-07"
+    tags: [engenharia, cloud, analytics]
+    itens:
+      - texto: Automatizei a ingestão diária de dados públicos com Python e armazenamento em objeto
+        texto_en: Automated daily ingestion of public datasets with Python and object storage
+        tags: [engenharia, cloud]
+      - texto: Documentei o catálogo de tabelas e as regras de qualidade de dados
+        texto_en: Documented the table catalog and data quality rules
+
+projetos:
+  - nome: Previsor de Colisões
+    nome_en: Collision Predictor
+    link: github.com/ana-exemplo/previsor
+    descricao: Pipeline completo com ETL, crawler e modelo de ML para prever acidentes em rodovias.
+    descricao_en: End-to-end pipeline with ETL, crawler and ML model to predict highway accidents.
+    tecnologias: [Python, Airflow, scikit-learn]
+    tags: [ml, engenharia]
+
+  - nome: Painel de Mobilidade Urbana
+    nome_en: Urban Mobility Dashboard
+    link: github.com/ana-exemplo/mobilidade
+    descricao: Painel público com indicadores de transporte a partir de dados abertos.
+    descricao_en: Public dashboard with transit indicators built from open data.
+    tecnologias: [SQL, dbt, Metabase]
+    tags: [analytics, bi]
+
+  - nome: Lakehouse de Bolso
+    nome_en: Pocket Lakehouse
+    link: github.com/ana-exemplo/lakehouse
+    descricao: Ambiente de lakehouse local com orquestração, testes de dados e IaC.
+    descricao_en: Local lakehouse environment with orchestration, data tests and IaC.
+    tecnologias: [DuckDB, Dagster, Terraform]
+    tags: [engenharia, cloud]
+
+formacao:
+  - curso: Tecnologia em Ciência de Dados
+    curso_en: Associate Degree in Data Science
+    instituicao: Faculdade Fictícia
+    instituicao_en: Fictional College
+    inicio: "2024-02"
+    fim: "2026-12"
+    status: em andamento
+
+  - curso: Bacharelado em Estatística
+    curso_en: B.Sc. in Statistics
+    instituicao: Universidade Imaginária
+    instituicao_en: Imaginary University
+    inicio: "2018-02"
+    fim: "2022-12"
+    status: concluído
+
+habilidades:
+  - grupo: Linguagens
+    grupo_en: Languages
+    itens: [Python, SQL, Go]
+  - grupo: Machine Learning
+    itens: [scikit-learn, PyTorch, XGBoost, MLflow]
+    tags: [ml]
+  - grupo: Estatística
+    grupo_en: Statistics
+    itens: [Inferência, Testes A/B, Séries temporais]
+    tags: [estatistica]
+  - grupo: Engenharia de Dados
+    grupo_en: Data Engineering
+    itens: [Airflow, dbt, Spark, Kafka]
+    tags: [engenharia]
+  - grupo: Nuvem
+    grupo_en: Cloud
+    itens: [AWS, Terraform, Docker]
+    tags: [cloud]
+  - grupo: BI e Visualização
+    grupo_en: BI & Visualization
+    itens: [Power BI, Metabase, Looker Studio]
+    tags: [analytics, bi]
+
+certificacoes:
+  - nome: Certificação Fictícia em Nuvem — Associate
+    nome_en: Fictional Cloud Certification — Associate
+    emissor: Nuvem Exemplo
+    emissor_en: Example Cloud
+    data: "2025-01"
+    link: exemplo.com/certificados/ana
+    tags: [cloud, engenharia]
+  - nome: Especialização em Aprendizado de Máquina
+    nome_en: Machine Learning Specialization
+    emissor: Escola Online Exemplo
+    emissor_en: Example Online School
+    data: "2023-07"
+    tags: [ml]
+
+idiomas:
+  - idioma: Português
+    idioma_en: Portuguese
+    nivel: Nativo
+    nivel_en: Native
+  - idioma: Inglês
+    idioma_en: English
+    nivel: Intermediário
+    nivel_en: Intermediate
+  - idioma: Espanhol
+    idioma_en: Spanish
+    nivel: Básico
+    nivel_en: Basic
+
+atividades:
+  - titulo: Monitora de Estatística
+    titulo_en: Statistics Teaching Assistant
+    org: Universidade Imaginária
+    org_en: Imaginary University
+    data: "2020-03"
+    descricao: Plantões semanais de dúvidas e correção de listas para 60 alunos.
+    descricao_en: Weekly office hours and grading for 60 students.
+    tags: [estatistica, ml]
+  - titulo: Palestrante — Dados Abertos na Prática
+    titulo_en: Speaker — Open Data in Practice
+    org: Meetup Dados SP (fictício)
+    org_en: Data SP Meetup (fictional)
+    data: "2024-10"
+    descricao: Palestra sobre como montar pipelines reprodutíveis com dados públicos.
+    descricao_en: Talk on building reproducible pipelines with public data.
+    tags: [engenharia, analytics]
+
+perfis:
+  cientista-dados:
+    titulo: Cientista de Dados
+    titulo_en: Data Scientist
+    tags: [ml, estatistica, analytics]
+    secoes: [resumo, experiencias, projetos, formacao, habilidades, idiomas]
+  data-engineer:
+    titulo: Engenheira de Dados
+    titulo_en: Data Engineer
+    tags: [engenharia, cloud]
+    secoes: [resumo, experiencias, projetos, habilidades, formacao, idiomas]
+  analista-dados:
+    titulo: Analista de Dados
+    titulo_en: Data Analyst
+    tags: [analytics, bi]
+    secoes: [resumo, experiencias, habilidades, projetos, formacao, idiomas]
+  full-cycle:
+    titulo: Cientista de Dados Full Cycle
+    titulo_en: Full Cycle Data Scientist
+    tags: [ml, engenharia, analytics, cloud]
+    secoes: [resumo, experiencias, projetos, habilidades, formacao, certificacoes, idiomas, atividades]

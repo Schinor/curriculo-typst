@@ -1,0 +1,204 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Schinor/curriculo-typst/schema/curriculo.schema.json",
+  "title": "Dados do currículo (curriculo-typst)",
+  "description": "Fonte única de dados do currículo. Itens com `tags` aparecem apenas nos perfis que compartilham alguma tag; itens sem `tags` aparecem em todos. Campos com sufixo `_en` são usados quando idioma=en.",
+  "type": "object",
+  "required": ["pessoal", "perfis"],
+  "definitions": {
+    "data": {
+      "type": "string",
+      "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+      "description": "Data no formato AAAA-MM, entre aspas. Ex.: \"2025-03\""
+    },
+    "dataOuAtual": {
+      "type": "string",
+      "pattern": "^(\\d{4}-(0[1-9]|1[0-2])|atual)$",
+      "description": "AAAA-MM ou a palavra atual"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Tags do item. Sem tags = aparece em todos os perfis."
+    },
+    "texto": { "type": "string" }
+  },
+  "properties": {
+    "pessoal": {
+      "type": "object",
+      "required": ["nome", "email"],
+      "properties": {
+        "nome": { "type": "string" },
+        "titulo_padrao": { "type": "string", "description": "Título usado quando o perfil não define `titulo`." },
+        "titulo_padrao_en": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "telefone": { "type": "string" },
+        "cidade": { "type": "string" },
+        "cidade_en": { "type": "string" },
+        "linkedin": { "type": "string", "description": "Ex.: linkedin.com/in/seu-usuario" },
+        "github": { "type": "string" },
+        "site": { "type": "string" },
+        "foto": { "type": "string", "description": "Caminho relativo à raiz do projeto (--root)." }
+      }
+    },
+    "resumos": {
+      "type": "object",
+      "description": "Chave = id do perfil (ou id_en); `padrao` é o fallback.",
+      "additionalProperties": { "type": "string" }
+    },
+    "experiencias": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["cargo", "empresa", "inicio"],
+        "properties": {
+          "cargo": { "type": "string" },
+          "cargo_en": { "type": "string" },
+          "empresa": { "type": "string" },
+          "empresa_en": { "type": "string" },
+          "local": { "type": "string" },
+          "local_en": { "type": "string" },
+          "inicio": { "$ref": "#/definitions/data" },
+          "fim": { "$ref": "#/definitions/dataOuAtual" },
+          "tags": { "$ref": "#/definitions/tags" },
+          "itens": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                { "type": "string" },
+                {
+                  "type": "object",
+                  "required": ["texto"],
+                  "properties": {
+                    "texto": { "type": "string" },
+                    "texto_en": { "type": "string" },
+                    "tags": { "$ref": "#/definitions/tags" }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "projetos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["nome"],
+        "properties": {
+          "nome": { "type": "string" },
+          "nome_en": { "type": "string" },
+          "link": { "type": "string" },
+          "descricao": { "type": "string" },
+          "descricao_en": { "type": "string" },
+          "tecnologias": { "type": "array", "items": { "type": "string" } },
+          "tags": { "$ref": "#/definitions/tags" }
+        }
+      }
+    },
+    "formacao": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["curso", "instituicao", "inicio"],
+        "properties": {
+          "curso": { "type": "string" },
+          "curso_en": { "type": "string" },
+          "instituicao": { "type": "string" },
+          "instituicao_en": { "type": "string" },
+          "inicio": { "$ref": "#/definitions/data" },
+          "fim": { "$ref": "#/definitions/dataOuAtual" },
+          "status": {
+            "type": "string",
+            "description": "Valores conhecidos são traduzidos automaticamente: em andamento, concluído, trancado.",
+            "examples": ["em andamento", "concluído", "trancado"]
+          },
+          "status_en": { "type": "string" },
+          "tags": { "$ref": "#/definitions/tags" }
+        }
+      }
+    },
+    "habilidades": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["grupo", "itens"],
+        "properties": {
+          "grupo": { "type": "string" },
+          "grupo_en": { "type": "string" },
+          "itens": { "type": "array", "items": { "type": "string" } },
+          "tags": { "$ref": "#/definitions/tags" }
+        }
+      }
+    },
+    "certificacoes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["nome"],
+        "properties": {
+          "nome": { "type": "string" },
+          "nome_en": { "type": "string" },
+          "emissor": { "type": "string" },
+          "emissor_en": { "type": "string" },
+          "data": { "$ref": "#/definitions/data" },
+          "link": { "type": "string" },
+          "tags": { "$ref": "#/definitions/tags" }
+        }
+      }
+    },
+    "idiomas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["idioma", "nivel"],
+        "properties": {
+          "idioma": { "type": "string" },
+          "idioma_en": { "type": "string" },
+          "nivel": { "type": "string" },
+          "nivel_en": { "type": "string" },
+          "tags": { "$ref": "#/definitions/tags" }
+        }
+      }
+    },
+    "atividades": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["titulo"],
+        "properties": {
+          "titulo": { "type": "string" },
+          "titulo_en": { "type": "string" },
+          "org": { "type": "string" },
+          "org_en": { "type": "string" },
+          "data": { "$ref": "#/definitions/data" },
+          "descricao": { "type": "string" },
+          "descricao_en": { "type": "string" },
+          "tags": { "$ref": "#/definitions/tags" }
+        }
+      }
+    },
+    "perfis": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Chave = id do perfil (vira o nome do PDF).",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["secoes"],
+        "properties": {
+          "titulo": { "type": "string" },
+          "titulo_en": { "type": "string" },
+          "tags": { "$ref": "#/definitions/tags" },
+          "secoes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "enum": ["resumo", "experiencias", "projetos", "formacao", "habilidades", "certificacoes", "idiomas", "atividades"]
+            }
+          }
+        }
+      }
+    }
+  }
+}

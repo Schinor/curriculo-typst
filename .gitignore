@@ -1,0 +1,10 @@
+# Dados reais nunca entram neste repositório.
+/dados.yaml
+/dados.yml
+/foto.*
+
+# Saída de compilação. PDFs de exemplo são publicados via Release, não por commit.
+out/
+*.pdf
+
+.DS_Store

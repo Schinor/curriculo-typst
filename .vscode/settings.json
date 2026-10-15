@@ -1,0 +1,11 @@
+{
+  "yaml.schemas": {
+    "./schema/curriculo.schema.json": ["exemplos/dados.yaml", "dados.yaml"]
+  },
+  "tinymist.fontPaths": ["${workspaceFolder}/fonts"],
+  "tinymist.rootPath": "${workspaceFolder}",
+  "tinymist.formatterMode": "typstyle",
+  "files.associations": {
+    "pre-commit": "shellscript"
+  }
+}

@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# Proteção contra vazamento de dados pessoais no repositório público.
+#
+# Instalação (uma vez por clone):
+#   git config core.hooksPath scripts
+#
+# Modos:
+#   scripts/pre-commit          checa os arquivos em stage (uso como hook)
+#   scripts/pre-commit --todos  checa todos os arquivos versionados (uso no CI)
+#
+# Checagens:
+#   1. Bloqueia *.pdf, *.yaml, *.yml, *.jpg, *.jpeg, *.png fora de exemplos/, .github/ e docs/.
+#   2. Se CURRICULO_PRIVADO_PADROES apontar para um arquivo LOCAL, fora do repositório,
+#      com um padrão por linha, bloqueia o commit se algum padrão aparecer no diff.
+#      Esse arquivo nunca deve ser versionado.
+set -euo pipefail
+
+RAIZ="$(git rev-parse --show-toplevel)"
+cd "$RAIZ"
+
+if [ "${1:-}" = "--todos" ]; then
+  mapfile -t ARQUIVOS < <(git ls-files)
+else
+  mapfile -t ARQUIVOS < <(git diff --cached --name-only --diff-filter=ACMR)
+fi
+
+falhou=0
+
+# 1. Extensões sensíveis fora das pastas permitidas.
+for arq in "${ARQUIVOS[@]}"; do
+  case "$arq" in
+    exemplos/* | .github/* | docs/*) continue ;;
+  esac
+  case "${arq,,}" in
+    *.pdf | *.yaml | *.yml | *.jpg | *.jpeg | *.png)
+      echo "bloqueado: \"$arq\" (pdf/yaml/imagem só são permitidos em exemplos/, .github/ e docs/)" >&2
+      falhou=1
+      ;;
+  esac
+done
+
+# 2. Padrões privados (apenas no modo hook, nunca no CI).
+PADROES="${CURRICULO_PRIVADO_PADROES:-}"
+if [ "${1:-}" != "--todos" ] && [ -n "$PADROES" ]; then
+  if [ ! -f "$PADROES" ]; then
+    echo "aviso: CURRICULO_PRIVADO_PADROES=\"$PADROES\" não existe; checagem de padrões ignorada" >&2
+  else
+    PADROES_ABS="$(cd "$(dirname "$PADROES")" && pwd)/$(basename "$PADROES")"
+    case "$PADROES_ABS" in
+      "$RAIZ"/*)
+        echo "bloqueado: o arquivo de padrões precisa ficar FORA do repositório" >&2
+        exit 1
+        ;;
+    esac
+    # Só as linhas adicionadas; padrões vazios e comentários são ignorados.
+    ADICIONADAS="$(git diff --cached -U0 --no-color | grep -E '^\+' | grep -vE '^\+\+\+ ' || true)"
+    LIMPOS="$(grep -vE '^\s*(#|$)' "$PADROES" || true)"
+    if [ -n "$LIMPOS" ] && [ -n "$ADICIONADAS" ] && grep -qiF -f <(echo "$LIMPOS") <<<"$ADICIONADAS"; then
+      # Não imprime o padrão encontrado, para não espalhar o dado em logs.
+      echo "bloqueado: o diff contém um dos padrões privados de \$CURRICULO_PRIVADO_PADROES" >&2
+      echo "           rode: git diff --cached | grep -iF -f \"\$CURRICULO_PRIVADO_PADROES\"" >&2
+      falhou=1
+    fi
+  fi
+fi
+
+if [ "$falhou" -ne 0 ]; then
+  echo "commit bloqueado pela proteção de dados (scripts/pre-commit)" >&2
+  exit 1
+fi
